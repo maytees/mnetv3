@@ -2,16 +2,15 @@
 
 import { motion, useAnimation, useInView } from "framer-motion";
 import React, { useEffect, useRef } from "react";
+import Image from "next/image";
 
-interface ServiceProps {
-  title: string;
-  link: string;
+interface ContactInfoProps {
+  image: string;
   desc: string;
   mainControls: any;
-  disabled?: boolean;
 }
 
-const Service: React.FC<ServiceProps> = (props: ServiceProps) => {
+const ContactInfo: React.FC<ContactInfoProps> = (props: ContactInfoProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false });
   const mainControls = useAnimation();
@@ -28,13 +27,13 @@ const Service: React.FC<ServiceProps> = (props: ServiceProps) => {
         variants={{
           hidden: {
             opacity: 0,
-            y: 50,
-            scale: 0,
+            scaleX: 1,
+            // scale: 0,
           },
           visible: {
             opacity: 1,
-            y: 0,
-            scale: 1,
+            scaleX: 1,
+            // scale: 1,
           },
         }}
         initial="hidden"
@@ -47,21 +46,12 @@ const Service: React.FC<ServiceProps> = (props: ServiceProps) => {
         }}
         className="flex flex-row items-center justify-between w-full max-sm:flex-col sm:max-lg:flex-col lg:px-96 "
       >
-        <h1
-          className={`text-4xl font-medium text-left sm:max-lg:text-center max-sm:text-center ${
-            props.disabled ? "text-slate-700" : ""
-          }`}
-        >
-          {!props.disabled
-            ? <a href={props.link} target="_blank">{props.title}</a>
-            : (props.title)}
-        </h1>
-
-        <p className="text-xl font-light text-left">{props.desc}</p>
+        <Image width={50} height={50} src={props.image} alt={props.desc} />
+        <p className="text-2xl font-light text-left">{props.desc}</p>
       </motion.div>
       <div className="w-3/5 h-[0.5px] bg-slate-300"></div>
     </>
   );
 };
 
-export default Service;
+export default ContactInfo;
